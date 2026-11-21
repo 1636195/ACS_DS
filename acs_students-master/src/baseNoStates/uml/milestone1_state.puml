@@ -1,0 +1,279 @@
+
+@startuml
+title Access Control System - Milestone 1
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+' ==========================================
+' STATE PATTERN
+' ==========================================
+
+package "State - Doors" {
+
+  class Door {
+    - id : String
+    - closed : boolean
+    - state : DoorState
+    - originSpace : Space
+    - destinationSpace : Space
+    + processRequest(request : RequestReader) : void
+    + setState(newState : DoorState) : void
+    + isCurrentState(candidate : DoorState) : boolean
+    + isClosed() : boolean
+    + setClosed(closed : boolean) : void
+    + getStateName() : String
+    + connectSpaces(origin : Space, destination : Space) : void
+    + getOriginSpace() : Space
+    + getDestinationSpace() : Space
+    + getId() : String
+    + toJson() : JSONObject
+  }
+
+  abstract class DoorState {
+    # door : Door
+    + execute(action : String) : void
+    # open() : void
+    # close() : void
+    # lock() : void
+    # unlock() : void
+    # unlockShortly() : void
+    + getName() : String
+  }
+
+  class DoorLock {
+    # unlock() : void
+    # unlockShortly() : void
+    + getName() : String
+  }
+
+  class DoorUnlock {
+    # open() : void
+    # close() : void
+    # lock() : void
+    + getName() : String
+  }
+
+  class DoorUnlockShortly {
+    - {static} CLOCK : Clock
+    - {static} DURATION_NANOS : long
+    - startedAt : long
+    + startObserving() : void
+    + stopObserving() : void
+    # open() : void
+    # close() : void
+    + update(source : Observable, arg : Object) : void
+    + getName() : String
+  }
+
+  class DoorPropped {
+    # close() : void
+    + getName() : String
+  }
+
+  Door "1" o-- "1" DoorState : current state
+
+  DoorState <|-- DoorLock
+  DoorState <|-- DoorUnlock
+  DoorState <|-- DoorUnlockShortly
+  DoorState <|-- DoorPropped
+
+  DoorState --> Door : modifies
+}
+
+' ==========================================
+' OBSERVER PATTERN
+' ==========================================
+
+package "Observer - Clock" {
+
+  class Clock {
+    - timer : Timer
+    + Clock()
+  }
+
+  class Observable <<Java library>>
+  interface Observer <<Java library>>
+
+  Observable <|-- Clock
+  Observer <|.. DoorUnlockShortly
+  DoorUnlockShortly ..> Clock : observes
+}
+
+' ==========================================
+' COMPOSITE PATTERN
+' ==========================================
+
+package "Composite - Areas" {
+
+  abstract class Area {
+    - id : String
+    + getId() : String
+    + getDoorsGivingAccess() : List<Door>
+    + containsArea(area : Area) : boolean
+  }
+
+  class Space {
+    - accessDoors : List<Door>
+    + addDoorGivingAccess(door : Door) : void
+    + getDoorsGivingAccess() : List<Door>
+    + containsArea(area : Area) : boolean
+  }
+
+  class Partition {
+    - children : List<Area>
+    + addArea(area : Area) : void
+    + getChildren() : List<Area>
+    + getDoorsGivingAccess() : List<Door>
+    + containsArea(area : Area) : boolean
+  }
+
+  class DirectoryAreas {
+    - {static} areas : Map<String, Area>
+    + {static} makeAreas() : void
+    + {static} findAreaById(id : String) : Area
+  }
+
+  Area <|-- Space
+  Area <|-- Partition
+
+  Partition "1" o-- "0..*" Area : children
+  Space "1" o-- "0..*" Door : accessDoors
+
+  DirectoryAreas ..> Area : manages
+}
+
+' ==========================================
+' DOOR - SPACE RELATIONSHIPS
+' ==========================================
+
+Door --> "1" Space : originSpace
+Door --> "1" Space : destinationSpace
+
+' ==========================================
+' ROLES - USERS AND PERMISSIONS
+' ==========================================
+
+package "Roles - Users and Permissions" {
+
+  class User {
+    - name : String
+    - credential : String
+    - group : UserGroup
+    + getName() : String
+    + getCredential() : String
+    + getGroup() : UserGroup
+    + setGroup(group : UserGroup) : void
+  }
+
+  class UserGroup {
+    - name : String
+    - administrator : boolean
+    - schedule : Schedule
+    - allowedActions : Set<String>
+    - allowedAreas : List<Area>
+    + getName() : String
+    + setSchedule(schedule : Schedule) : void
+    + addAllowedAction(action : String) : void
+    + addAllowedArea(area : Area) : void
+    + canBeInArea(area : Area) : boolean
+    + isAuthorized(action : String, door : Door, dateTime : LocalDateTime) : boolean
+  }
+
+  class Schedule {
+    - startDate : LocalDate
+    - endDate : LocalDate
+    - startTime : LocalTime
+    - endTime : LocalTime
+    - allowedDays : Set<DayOfWeek>
+    + isInSchedule(dateTime : LocalDateTime) : boolean
+  }
+
+  class DirectoryUsers {
+    - {static} users : ArrayList<User>
+    + {static} makeUsers() : void
+    + {static} findUserByCredential(credential : String) : User
+  }
+
+  User "0..*" --> "1" UserGroup : belongs to
+  UserGroup --> "0..1" Schedule : schedule
+  UserGroup --> "0..*" Area : allowedAreas
+  UserGroup ..> Door : authorizes
+
+  DirectoryUsers ..> User : manages
+  DirectoryUsers ..> UserGroup : creates
+}
+
+
+' ==========================================
+' REQUESTS
+' ==========================================
+
+package "Requests" {
+
+  interface Request {
+    + process() : void
+    + answerToJson() : JSONObject
+    + toString() : String
+  }
+
+  class RequestReader {
+    - credential : String
+    - action : String
+    - now : LocalDateTime
+    - doorId : String
+    - userName : String
+    - authorized : boolean
+    - reasons : ArrayList<String>
+    - doorStateName : String
+    - doorClosed : Boolean
+    + process() : void
+    + answerToJson() : JSONObject
+    + getAction() : String
+    + isAuthorized() : boolean
+    + setDoorStateName(name : String) : void
+    + addReason(reason : String) : void
+    - authorize(user : User, door : Door) : void
+  }
+
+  class RequestArea {
+    - credential : String
+    - action : String
+    - areaId : String
+    - now : LocalDateTime
+    - requests : ArrayList<RequestReader>
+    - errorReason : String
+    + process() : void
+    + answerToJson() : JSONObject
+    + getAction() : String
+  }
+
+  class RequestRefresh {
+    - jsonsDoors : ArrayList<JSONObject>
+    + process() : void
+    + answerToJson() : JSONObject
+  }
+
+  Request <|.. RequestReader
+  Request <|.. RequestArea
+  Request <|.. RequestRefresh
+
+  RequestArea "1" o-- "0..*" RequestReader : requestsDoors
+}
+
+' ==========================================
+' REQUESTS AND SYSTEM RELATIONSHIPS
+' ==========================================
+
+Door ..> RequestReader : processes
+
+RequestReader ..> DirectoryUsers : finds user
+RequestReader ..> Door : requests action
+
+RequestArea ..> DirectoryAreas : finds area
+RequestArea ..> Area : retrieves doors
+
+RequestRefresh ..> Door : retrieves state
+
+@enduml
