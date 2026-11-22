@@ -1,5 +1,8 @@
 package baseNoStates.requests;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import baseNoStates.DirectoryDoors;
 import baseNoStates.DirectoryUsers;
 import baseNoStates.Door;
@@ -11,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RequestReader implements Request {
+  private static final Logger logger = LoggerFactory.getLogger(RequestReader.class);
   private final String credential; // who
   private final String action;     // what
   private final LocalDateTime now; // when
@@ -52,15 +56,15 @@ public class RequestReader implements Request {
       userName = "unknown";
     }
     return "Request{"
-            + "credential=" + credential
-            + ", userName=" + userName
-            + ", action=" + action
-            + ", now=" + now
-            + ", doorID=" + doorId
-            + ", closed=" + doorClosed
-            + ", authorized=" + authorized
-            + ", reasons=" + reasons
-            + "}";
+        + "credential=" + credential
+        + ", userName=" + userName
+        + ", action=" + action
+        + ", now=" + now
+        + ", doorID=" + doorId
+        + ", closed=" + doorClosed
+        + ", authorized=" + authorized
+        + ", reasons=" + reasons
+        + "}";
   }
 
   public JSONObject answerToJson() {
@@ -95,6 +99,12 @@ public class RequestReader implements Request {
 
     // Store the resulting physical state.
     doorClosed = door.isClosed();
+
+    if (authorized) {
+      logger.info("User {} authorized for action {} on door {}", credential, action, doorId);
+    } else {
+      logger.warn("User {} NOT authorized for action {} on door {}. Reasons: {}", credential, action, doorId, reasons);
+    }
   }
 
   /*
@@ -131,4 +141,3 @@ public class RequestReader implements Request {
     }
   }
 }
-

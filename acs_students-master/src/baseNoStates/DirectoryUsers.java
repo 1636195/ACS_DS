@@ -6,16 +6,18 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Creates and stores the registered users and their
  * access groups.
- *
  * Each group defines its permitted actions, areas
  * and schedule. Users inherit these permissions
  * through their group.
  */
 public final class DirectoryUsers {
-
+  private static final Logger logger = LoggerFactory.getLogger(DirectoryUsers.class);
   private static final ArrayList<User> users = new ArrayList<>();
 
   private DirectoryUsers() {
@@ -33,53 +35,34 @@ public final class DirectoryUsers {
     // ---------------------------------------
     // EMPLOYEE GROUP
     // ---------------------------------------
-
     Schedule employeeSchedule = new Schedule(
-            LocalDate.of(2026, 9, 1),
-            LocalDate.of(2027, 3, 1),
-            LocalTime.of(9, 0),
-            LocalTime.of(17, 0),
-            EnumSet.range(
-                    DayOfWeek.MONDAY,
-                    DayOfWeek.FRIDAY
-            )
+        LocalDate.of(2026, 9, 1),
+        LocalDate.of(2027, 3, 1),
+        LocalTime.of(9, 0),
+        LocalTime.of(17, 0),
+        EnumSet.range(DayOfWeek.MONDAY, DayOfWeek.FRIDAY)
     );
-
     employees.setSchedule(employeeSchedule);
-
     employees.addAllowedAction(Actions.OPEN);
     employees.addAllowedAction(Actions.CLOSE);
     employees.addAllowedAction(Actions.UNLOCK_SHORTLY);
 
     // Employees may access all areas except parking.
-    employees.addAllowedArea(
-            DirectoryAreas.findAreaById("ground_floor")
-    );
-    employees.addAllowedArea(
-            DirectoryAreas.findAreaById("floor1")
-    );
-    employees.addAllowedArea(
-            DirectoryAreas.findAreaById("stairs")
-    );
-    employees.addAllowedArea(
-            DirectoryAreas.findAreaById("exterior")
-    );
+    employees.addAllowedArea(DirectoryAreas.findAreaById("ground_floor"));
+    employees.addAllowedArea(DirectoryAreas.findAreaById("floor1"));
+    employees.addAllowedArea(DirectoryAreas.findAreaById("stairs"));
+    employees.addAllowedArea(DirectoryAreas.findAreaById("exterior"));
 
     // ---------------------------------------
     // MANAGER GROUP
     // ---------------------------------------
-
     Schedule managerSchedule = new Schedule(
-            LocalDate.of(2026, 9, 1),
-            LocalDate.of(2027, 3, 1),
-            LocalTime.of(8, 0),
-            LocalTime.of(20, 0),
-            EnumSet.range(
-                    DayOfWeek.MONDAY,
-                    DayOfWeek.SATURDAY
-            )
+        LocalDate.of(2026, 9, 1),
+        LocalDate.of(2027, 3, 1),
+        LocalTime.of(8, 0),
+        LocalTime.of(20, 0),
+        EnumSet.range(DayOfWeek.MONDAY, DayOfWeek.SATURDAY)
     );
-
     managers.setSchedule(managerSchedule);
 
     // Managers can perform every action.
@@ -90,38 +73,29 @@ public final class DirectoryUsers {
     managers.addAllowedAction(Actions.UNLOCK_SHORTLY);
 
     // Grant access to the entire building.
-    managers.addAllowedArea(
-            DirectoryAreas.findAreaById("building")
-    );
+    managers.addAllowedArea(DirectoryAreas.findAreaById("building"));
 
     // ---------------------------------------
     // ADMINISTRATOR GROUP
     // ---------------------------------------
-
     // Administrators have unrestricted access.
-    // UserGroup handles this through the
-    // administrator flag.
+    // UserGroup handles this through the administrator flag.
 
     // ---------------------------------------
     // BLANK GROUP
     // ---------------------------------------
-
     // No actions, areas or schedule are assigned.
     // Users remain registered without privileges.
 
     // ---------------------------------------
     // REGISTER USERS
     // ---------------------------------------
-
     users.add(new User("Bernat", "12345", blank));
     users.add(new User("Blai", "77532", blank));
-
     users.add(new User("Ernest", "74984", employees));
     users.add(new User("Eulalia", "43295", employees));
-
     users.add(new User("Manel", "95783", managers));
     users.add(new User("Marta", "05827", managers));
-
     users.add(new User("Ana", "11343", admin));
   }
 
@@ -132,11 +106,7 @@ public final class DirectoryUsers {
         return user;
       }
     }
-
-    System.out.println(
-            "User with credential " + credential + " not found"
-    );
-
+    logger.warn("User with credential {} not found", credential);
     return null;
   }
 }

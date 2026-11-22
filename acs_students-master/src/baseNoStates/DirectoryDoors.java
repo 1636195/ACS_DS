@@ -3,7 +3,11 @@ package baseNoStates;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class DirectoryDoors {
+  private static final Logger logger = LoggerFactory.getLogger(DirectoryDoors.class);
   private static ArrayList<Door> allDoors;
 
   public static void makeDoors() {
@@ -31,14 +35,13 @@ public final class DirectoryDoors {
         return door;
       }
     }
-    System.out.println("door with id " + id + " not found");
+    logger.warn("Door with id {} not found", id);
     return null; // otherwise we get a Java error
   }
 
   // this is needed by RequestRefresh
   public static ArrayList<Door> getAllDoors() {
-    System.out.println(allDoors);
+    logger.debug("All doors: {}", allDoors);
     return allDoors;
   }
-
 }

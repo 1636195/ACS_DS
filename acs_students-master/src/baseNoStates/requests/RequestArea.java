@@ -3,23 +3,24 @@ package baseNoStates.requests;
 import baseNoStates.Actions;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import baseNoStates.Area;
 import baseNoStates.DirectoryAreas;
 import baseNoStates.Door;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RequestArea implements Request {
+  private static final Logger logger = LoggerFactory.getLogger(RequestArea.class);
+
   private final String credential;
   private final String action;
   private final String areaId;
   private final LocalDateTime now;
   private String errorReason;
   private ArrayList<RequestReader> requests = new ArrayList<>();
-
 
   public RequestArea(String credential, String action, LocalDateTime now, String areaId) {
     this.credential = credential;
@@ -56,18 +57,17 @@ public class RequestArea implements Request {
     } else {
       requestsDoorsStr = requests.toString();
     }
-    return "Request{"
-            + "credential=" + credential
-            + ", action=" + action
-            + ", now=" + now
-            + ", areaId=" + areaId
-            + ", requestsDoors=" + requestsDoorsStr
-            + "}";
+    return "Request{" +
+        "credential=" + credential +
+        ", action=" + action +
+        ", now=" + now +
+        ", areaId=" + areaId +
+        ", requestsDoors=" + requestsDoorsStr +
+        '}';
   }
 
   @Override
   public void process() {
-
     requests.clear();
     errorReason = null;
 
@@ -79,23 +79,22 @@ public class RequestArea implements Request {
 
     // Find the requested space or partition.
     Area area = DirectoryAreas.findAreaById(areaId);
-
     if (area == null) {
       errorReason = "Unknown area: " + areaId;
-      System.out.println(errorReason);
+      logger.error(errorReason);
       return;
     }
 
     // Process one reader request for each access door.
     for (Door door : area.getDoorsGivingAccess()) {
-
       RequestReader requestReader = new RequestReader(
-              credential, action, now, door.getId()
+          credential,
+          action,
+          now,
+          door.getId()
       );
-
       requestReader.process();
       requests.add(requestReader);
     }
   }
-
 }
