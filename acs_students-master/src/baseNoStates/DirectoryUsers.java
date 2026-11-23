@@ -5,25 +5,32 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- * Creates and stores the registered users and their
- * access groups.
- * Each group defines its permitted actions, areas
- * and schedule. Users inherit these permissions
- * through their group.
+/**
+ * Acts as a singleton registry for all registered users.
+ * It guarantees a single source of truth for users and their access groups.
  */
 public final class DirectoryUsers {
+
   private static final Logger logger = LoggerFactory.getLogger(DirectoryUsers.class);
-  private static final ArrayList<User> users = new ArrayList<>();
+  private final ArrayList<User> users;
 
   private DirectoryUsers() {
+    users = new ArrayList<>();
   }
 
-  public static void makeUsers() {
+  // Thread-safe lazy initialization Singleton holder.
+  private static class Holder {
+    private static final DirectoryUsers INSTANCE = new DirectoryUsers();
+  }
+
+  public static DirectoryUsers getInstance() {
+    return Holder.INSTANCE;
+  }
+
+  public void makeUsers() {
     users.clear();
 
     // Create the four groups.
@@ -48,10 +55,10 @@ public final class DirectoryUsers {
     employees.addAllowedAction(Actions.UNLOCK_SHORTLY);
 
     // Employees may access all areas except parking.
-    employees.addAllowedArea(DirectoryAreas.findAreaById("ground_floor"));
-    employees.addAllowedArea(DirectoryAreas.findAreaById("floor1"));
-    employees.addAllowedArea(DirectoryAreas.findAreaById("stairs"));
-    employees.addAllowedArea(DirectoryAreas.findAreaById("exterior"));
+    employees.addAllowedArea(DirectoryAreas.getInstance().findAreaById("ground_floor"));
+    employees.addAllowedArea(DirectoryAreas.getInstance().findAreaById("floor1"));
+    employees.addAllowedArea(DirectoryAreas.getInstance().findAreaById("stairs"));
+    employees.addAllowedArea(DirectoryAreas.getInstance().findAreaById("exterior"));
 
     // ---------------------------------------
     // MANAGER GROUP
@@ -73,7 +80,7 @@ public final class DirectoryUsers {
     managers.addAllowedAction(Actions.UNLOCK_SHORTLY);
 
     // Grant access to the entire building.
-    managers.addAllowedArea(DirectoryAreas.findAreaById("building"));
+    managers.addAllowedArea(DirectoryAreas.getInstance().findAreaById("building"));
 
     // ---------------------------------------
     // ADMINISTRATOR GROUP
@@ -99,8 +106,13 @@ public final class DirectoryUsers {
     users.add(new User("Ana", "11343", admin));
   }
 
-  // Finds a user by their unique credential.
-  public static User findUserByCredential(String credential) {
+  /**
+   * Finds a user by their unique credential.
+   *
+   * @param credential the user credential
+   * @return the user, or null if not found
+   */
+  public User findUserByCredential(String credential) {
     for (User user : users) {
       if (user.getCredential().equals(credential)) {
         return user;

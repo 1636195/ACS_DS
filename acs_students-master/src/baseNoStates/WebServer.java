@@ -1,11 +1,9 @@
-
 package baseNoStates;
 
 import baseNoStates.requests.Request;
+import baseNoStates.requests.RequestArea;
 import baseNoStates.requests.RequestReader;
 import baseNoStates.requests.RequestRefresh;
-import baseNoStates.requests.RequestArea;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +13,6 @@ import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +20,11 @@ import org.slf4j.LoggerFactory;
 // https://www.ssaurel.com/blog/create-a-simple-http-web-server-in-java
 // http://www.jcgonzalez.com/java-socket-mini-server-http-example
 public class WebServer {
+
   private static final Logger logger = LoggerFactory.getLogger(WebServer.class);
   private static final int PORT = 8080; // port to listen connection
-  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+  private static final DateTimeFormatter formatter =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
   public WebServer() {
     try {
@@ -43,7 +42,9 @@ public class WebServer {
   }
 
   private class SocketThread extends Thread {
+
     private static final Logger logger = LoggerFactory.getLogger(SocketThread.class);
+
     // as an inner class, SocketThread sees WebServer attributes
     private final Socket insocked; // client connection via Socket class
 
@@ -86,7 +87,6 @@ public class WebServer {
             logger.debug("Token[{}]: {}", i, tokens[i]);
             i++;
           }
-
           // Here is where we send the request and get the answer inside it
           Request request = makeRequest(tokens);
           if (request != null) {
@@ -112,11 +112,11 @@ public class WebServer {
 
     private Request makeRequest(String[] tokens) {
       // always return request because it contains the answer for the Javascript client
-      System.out.print("tokens : ");
+      StringBuilder tokensStr = new StringBuilder("tokens : ");
       for (String token : tokens) {
-        System.out.print(token + ", ");
+        tokensStr.append(token).append(", ");
       }
-      System.out.println();
+      logger.debug(tokensStr.toString());
 
       Request request;
       // assertions below evaluated to false won't stop the webserver, just print an
@@ -132,7 +132,7 @@ public class WebServer {
           request = makeRequestArea(tokens);
           break;
         case "get_children":
-          //TODO: this is to be implemented when programming the mobile app in Flutter
+          // TODO: this is to be implemented when programming the mobile app in Flutter
           // in order to navigate the hierarchy of partitions, spaces and doors
           assert false : "request get_children is not yet implemented";
           request = null;
@@ -169,8 +169,8 @@ public class WebServer {
       answer += "Content-type: application/json\r\n";
       answer += "Access-Control-Allow-Origin: *\r\n";
       // SUPERIMPORTANT to avoid the CORS problem :
-      // "Cross-Origin Request Blocked: The Same Origin Policy disallows reading
-      // the remote resource..."
+      // "Cross-Origin Request Blocked: The Same Origin Policy disallows
+      // reading the remote resource..."
       answer += "\r\n"; // blank line between headers and content, very important !
       return answer;
     }

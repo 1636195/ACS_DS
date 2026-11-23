@@ -1,24 +1,29 @@
 package baseNoStates.requests;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import baseNoStates.DirectoryDoors;
 import baseNoStates.DirectoryUsers;
 import baseNoStates.Door;
 import baseNoStates.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * Represents a request to perform an action on a specific door.
+ * The request stores the four Ws: who (credential), what (action), when (date and time)
+ * and where (door identifier).
+ */
 public class RequestReader implements Request {
+
   private static final Logger logger = LoggerFactory.getLogger(RequestReader.class);
+
   private final String credential; // who
-  private final String action;     // what
+  private final String action; // what
   private final LocalDateTime now; // when
-  private final String doorId;     // where
+  private final String doorId; // where
   private String userName;
   private boolean authorized;
   private final ArrayList<String> reasons; // why not authorized
@@ -49,7 +54,6 @@ public class RequestReader implements Request {
     reasons.add(reason);
   }
 
-
   @Override
   public String toString() {
     if (userName == null) {
@@ -67,6 +71,7 @@ public class RequestReader implements Request {
         + "}";
   }
 
+  @Override
   public JSONObject answerToJson() {
     JSONObject json = new JSONObject();
     json.put("authorized", authorized);
@@ -80,9 +85,9 @@ public class RequestReader implements Request {
 
   @Override
   public void process() {
-
-    User user = DirectoryUsers.findUserByCredential(credential);
-    Door door = DirectoryDoors.findDoorById(doorId);
+    // Retrieve users and doors from their respective Singleton instances.
+    User user = DirectoryUsers.getInstance().findUserByCredential(credential);
+    Door door = DirectoryDoors.getInstance().findDoorById(doorId);
 
     // An unknown door cannot process a request.
     if (door == null) {
@@ -103,19 +108,18 @@ public class RequestReader implements Request {
     if (authorized) {
       logger.info("User {} authorized for action {} on door {}", credential, action, doorId);
     } else {
-      logger.warn("User {} NOT authorized for action {} on door {}. Reasons: {}", credential, action, doorId, reasons);
+      logger.warn("User {} NOT authorized for action {} on door {}. Reasons: {}",
+          credential, action, doorId, reasons);
     }
   }
 
-  /*
+  /**
    * Determines whether a reader request is authorized.
    *
-   * Authorization depends on the user's group,
-   * the requested action, the door's connected
-   * spaces and the date and time of the request.
+   * @param user the user making the request
+   * @param door the door involved in the request
    */
   private void authorize(User user, Door door) {
-
     // Unknown users cannot perform any action.
     if (user == null) {
       authorized = false;

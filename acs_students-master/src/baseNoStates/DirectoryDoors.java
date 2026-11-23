@@ -2,34 +2,59 @@ package baseNoStates;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Acts as a singleton registry for all doors in the building.
+ * It guarantees a single source of truth for door instances
+ * throughout the application's lifecycle.
+ */
 public final class DirectoryDoors {
-  private static final Logger logger = LoggerFactory.getLogger(DirectoryDoors.class);
-  private static ArrayList<Door> allDoors;
 
-  public static void makeDoors() {
-    // basement
+  private static final Logger logger = LoggerFactory.getLogger(DirectoryDoors.class);
+  private final ArrayList<Door> allDoors;
+
+  private DirectoryDoors() {
+    allDoors = new ArrayList<>();
+  }
+
+  // Thread-safe lazy initialization Singleton holder.
+  private static class Holder {
+    private static final DirectoryDoors INSTANCE = new DirectoryDoors();
+  }
+
+  public static DirectoryDoors getInstance() {
+    return Holder.INSTANCE;
+  }
+
+  public void makeDoors() {
+    // Basement
     Door d1 = new Door("D1"); // exterior, parking
     Door d2 = new Door("D2"); // stairs, parking
 
-    // ground floor
+    // Ground floor
     Door d3 = new Door("D3"); // exterior, hall
     Door d4 = new Door("D4"); // stairs, hall
     Door d5 = new Door("D5"); // hall, room1
     Door d6 = new Door("D6"); // hall, room2
 
-    // first floor
+    // First floor
     Door d7 = new Door("D7"); // stairs, corridor
     Door d8 = new Door("D8"); // corridor, room3
     Door d9 = new Door("D9"); // corridor, IT
 
-    allDoors = new ArrayList<>(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
+    allDoors.clear();
+    allDoors.addAll(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
   }
 
-  public static Door findDoorById(String id) {
+  /**
+   * Finds a door by its unique identifier.
+   *
+   * @param id the door identifier
+   * @return the door, or null if not found
+   */
+  public Door findDoorById(String id) {
     for (Door door : allDoors) {
       if (door.getId().equals(id)) {
         return door;
@@ -39,8 +64,13 @@ public final class DirectoryDoors {
     return null; // otherwise we get a Java error
   }
 
-  // this is needed by RequestRefresh
-  public static ArrayList<Door> getAllDoors() {
+  /**
+   * Returns all doors in the system.
+   * This is needed by RequestRefresh.
+   *
+   * @return a list of all doors
+   */
+  public ArrayList<Door> getAllDoors() {
     logger.debug("All doors: {}", allDoors);
     return allDoors;
   }

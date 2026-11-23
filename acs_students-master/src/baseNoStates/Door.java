@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
+/**
  * Represents a physical door in the access control system.
  * The door stores its physical condition (open or closed)
  * and delegates its behavior to the current DoorState.
@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * that processes each action.
  */
 public class Door {
+
   private static final Logger logger = LoggerFactory.getLogger(Door.class);
 
   private final String id;
@@ -51,10 +52,13 @@ public class Door {
     return id;
   }
 
-  /*
+  /**
    * Connects the door to its origin and destination.
    * The door is registered only in the destination space
    * because it provides access to that space.
+   *
+   * @param origin      the origin space
+   * @param destination the destination space
    */
   public void connectSpaces(Space origin, Space destination) {
     if (origin == null || destination == null) {
@@ -76,6 +80,13 @@ public class Door {
     return destinationSpace;
   }
 
+  /**
+   * Changes the door state.
+   * If the previous state was a temporary one, it stops observing the clock.
+   * If the new state is temporary, it starts observing the clock.
+   *
+   * @param newState the new door state
+   */
   public synchronized void setState(DoorState newState) {
     if (newState == null) {
       throw new IllegalArgumentException("The new state cannot be null");
@@ -104,11 +115,11 @@ public class Door {
 
   @Override
   public String toString() {
-    return "Door{" +
-        "id='" + id + '\'' +
-        ", closed=" + closed +
-        ", state=" + getStateName() +
-        '}';
+    return "Door{"
+        + "id='" + id + '\''
+        + ", closed=" + closed
+        + ", state=" + getStateName()
+        + '}';
   }
 
   public synchronized JSONObject toJson() {

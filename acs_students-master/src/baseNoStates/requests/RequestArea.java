@@ -1,18 +1,22 @@
 package baseNoStates.requests;
 
 import baseNoStates.Actions;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import baseNoStates.Area;
 import baseNoStates.DirectoryAreas;
 import baseNoStates.Door;
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Represents a request that affects all doors in a given area.
+ * Only lock and unlock actions are valid for area requests.
+ */
 public class RequestArea implements Request {
+
   private static final Logger logger = LoggerFactory.getLogger(RequestArea.class);
 
   private final String credential;
@@ -57,13 +61,13 @@ public class RequestArea implements Request {
     } else {
       requestsDoorsStr = requests.toString();
     }
-    return "Request{" +
-        "credential=" + credential +
-        ", action=" + action +
-        ", now=" + now +
-        ", areaId=" + areaId +
-        ", requestsDoors=" + requestsDoorsStr +
-        '}';
+    return "Request{"
+        + "credential=" + credential
+        + ", action=" + action
+        + ", now=" + now
+        + ", areaId=" + areaId
+        + ", requestsDoors=" + requestsDoorsStr
+        + '}';
   }
 
   @Override
@@ -77,8 +81,8 @@ public class RequestArea implements Request {
       return;
     }
 
-    // Find the requested space or partition.
-    Area area = DirectoryAreas.findAreaById(areaId);
+    // Find the requested space or partition using the Singleton instance.
+    Area area = DirectoryAreas.getInstance().findAreaById(areaId);
     if (area == null) {
       errorReason = "Unknown area: " + areaId;
       logger.error(errorReason);
