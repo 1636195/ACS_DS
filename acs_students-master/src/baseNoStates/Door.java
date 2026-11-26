@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+/*
  * Represents a physical door in the access control system.
  * The door stores its physical condition (open or closed)
  * and delegates its behavior to the current DoorState.
@@ -52,7 +52,7 @@ public class Door {
     return id;
   }
 
-  /**
+  /*
    * Connects the door to its origin and destination.
    * The door is registered only in the destination space
    * because it provides access to that space.
@@ -80,7 +80,7 @@ public class Door {
     return destinationSpace;
   }
 
-  /**
+  /*
    * Changes the door state.
    * If the previous state was a temporary one, it stops observing the clock.
    * If the new state is temporary, it starts observing the clock.

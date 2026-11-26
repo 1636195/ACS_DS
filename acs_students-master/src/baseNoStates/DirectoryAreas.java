@@ -3,7 +3,7 @@ package baseNoStates;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
+/*
  * Acts as a singleton registry for the hierarchical tree of areas (partitions and spaces).
  * It guarantees a single source of truth for the building structure.
  */
@@ -80,7 +80,7 @@ public final class DirectoryAreas {
     connectDoor("D9", corridor, it);
   }
 
-  /**
+  /*
    * Finds an area using its unique identifier.
    *
    * @param id the area identifier
@@ -90,7 +90,7 @@ public final class DirectoryAreas {
     return areas.get(id);
   }
 
-  /**
+  /*
    * Connects a door with its origin and destination spaces.
    *
    * @param doorId      the door identifier

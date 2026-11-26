@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * A visitor that checks whether an area contains a specific target area.
  * It is used to prevent cycles when building the tree and to verify
  * permissions based on the area hierarchy.

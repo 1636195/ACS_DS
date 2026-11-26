@@ -1,0 +1,176 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package baseNoStates {
+    class Main {
+        + {static} main(args: String[]): void
+    }
+
+    class WebServer {
+        - logger: Logger
+        - PORT: int
+        + WebServer()
+    }
+
+    class DirectoryDoors <<Singleton>> {
+        - logger: Logger
+        - INSTANCE: DirectoryDoors
+        - allDoors: ArrayList<Door>
+        - DirectoryDoors()
+        + {static} getInstance(): DirectoryDoors
+        + makeDoors(): void
+        + findDoorById(id: String): Door
+        + getAllDoors(): ArrayList<Door>
+    }
+
+    class DirectoryUsers <<Singleton>> {
+        - logger: Logger
+        - INSTANCE: DirectoryUsers
+        - users: ArrayList<User>
+        - DirectoryUsers()
+        + {static} getInstance(): DirectoryUsers
+        + makeUsers(): void
+        + findUserByCredential(credential: String): User
+    }
+
+    class DirectoryAreas <<Singleton>> {
+        - INSTANCE: DirectoryAreas
+        - areas: Map<String, Area>
+        - DirectoryAreas()
+        + {static} getInstance(): DirectoryAreas
+        + makeAreas(): void
+        + findAreaById(id: String): Area
+    }
+
+    abstract class Area {
+        - id: String
+        + getId(): String
+        + {abstract} accept(visitor: AreaVisitor<T>): T
+    }
+
+    class Space {
+        - accessDoors: List<Door>
+        + addDoorGivingAccess(door: Door): void
+        + getAccessDoors(): List<Door>
+        + accept(visitor: AreaVisitor<T>): T
+    }
+
+    class Partition {
+        - children: List<Area>
+        + addArea(area: Area): void
+        + getChildren(): List<Area>
+        + accept(visitor: AreaVisitor<T>): T
+    }
+
+    interface AreaVisitor<T> {
+        + visit(space: Space): T
+        + visit(partition: Partition): T
+    }
+
+    class DoorCollectorVisitor {
+        + visit(space: Space): List<Door>
+        + visit(partition: Partition): List<Door>
+    }
+
+    class AreaContainsVisitor {
+        - target: Area
+        + visit(space: Space): Boolean
+        + visit(partition: Partition): Boolean
+    }
+
+    class ProppedDoorCollectorVisitor {
+        + visit(space: Space): List<Door>
+        + visit(partition: Partition): List<Door>
+    }
+
+    class Door {
+        - logger: Logger
+        - id: String
+        - closed: boolean
+        - state: DoorState
+        + processRequest(request: RequestReader): void
+        + setState(state: DoorState): void
+        + toJson(): JSONObject
+    }
+
+    abstract class DoorState {
+        # door: Door
+        + execute(action: String): void
+        + {abstract} getName(): String
+    }
+
+    class DoorLock
+    class DoorUnlock
+    class DoorUnlockShortly
+    class DoorPropped
+
+    class Clock <<Observable>> {
+        + Clock()
+    }
+}
+
+package baseNoStates.requests {
+    interface Request {
+        + process(): void
+        + answerToJson(): JSONObject
+    }
+
+    class RequestReader {
+        - logger: Logger
+        - credential: String
+        - action: String
+        - doorId: String
+        + process(): void
+    }
+
+    class RequestArea {
+        - logger: Logger
+        - credential: String
+        - areaId: String
+        + process(): void
+    }
+
+    class RequestRefresh {
+        + process(): void
+    }
+}
+
+' Relaciones
+Main ..> DirectoryDoors : uses
+Main ..> DirectoryAreas : uses
+Main ..> DirectoryUsers : uses
+Main ..> WebServer : creates
+
+WebServer ..> RequestReader : creates
+WebServer ..> RequestArea : creates
+WebServer ..> RequestRefresh : creates
+
+RequestArea --> DirectoryAreas : uses
+RequestArea --> AreaVisitor : uses
+RequestReader --> DirectoryDoors : uses
+RequestReader --> DirectoryUsers : uses
+RequestReader --> Door : modifies
+
+DirectoryAreas --> Area : contains
+DirectoryAreas --> DirectoryDoors : uses
+DirectoryUsers --> User : contains
+DirectoryDoors --> Door : contains
+
+Area <|-- Space
+Area <|-- Partition
+Partition o-- Area : children
+
+Area ..> AreaVisitor : accepts
+AreaVisitor <|.. DoorCollectorVisitor
+AreaVisitor <|.. AreaContainsVisitor
+AreaVisitor <|.. ProppedDoorCollectorVisitor
+
+Door --> DoorState : delegates to
+DoorState <|-- DoorLock
+DoorState <|-- DoorUnlock
+DoorState <|-- DoorUnlockShortly
+DoorState <|-- DoorPropped
+DoorUnlockShortly ..> Clock : observes
+
+@enduml

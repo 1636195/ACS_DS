@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+/*
  * Represents a request that affects all doors in a given area.
  * Only lock and unlock actions are valid for area requests.
  */

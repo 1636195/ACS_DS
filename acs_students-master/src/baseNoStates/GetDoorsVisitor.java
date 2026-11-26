@@ -3,7 +3,7 @@ package baseNoStates;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * Visitor that collects all doors giving access within an area.
  * It replaces the old getDoorsGivingAccess() method.
  */

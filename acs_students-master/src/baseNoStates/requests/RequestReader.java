@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+/*
  * Represents a request to perform an action on a specific door.
  * The request stores the four Ws: who (credential), what (action), when (date and time)
  * and where (door identifier).
@@ -113,7 +113,7 @@ public class RequestReader implements Request {
     }
   }
 
-  /**
+  /*
    * Determines whether a reader request is authorized.
    *
    * @param user the user making the request

@@ -19,7 +19,7 @@ public class Space extends Area {
     this.accessDoors = new ArrayList<>();
   }
 
-  /**
+  /*
    * Registers a door that gives access to this space.
    *
    * @param door the door to register
@@ -34,7 +34,7 @@ public class Space extends Area {
     }
   }
 
-  /**
+  /*
    * Returns the doors that give direct access to this space.
    * This method is used by the DoorCollectorVisitor.
    *

@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Base class for the State design pattern.
  * Each door delegates its actions to its current state.
  * Subclasses decide which actions are permitted and
@@ -14,7 +14,7 @@ public abstract class DoorState {
     this.door = door;
   }
 
-  /**
+  /*
    * Dispatches the requested action to the current state.
    *
    * @param action the action to execute
@@ -58,7 +58,7 @@ public abstract class DoorState {
   protected void unlockShortly() {
   }
 
-  /**
+  /*
    * Each concrete state provides its name.
    *
    * @return the state name

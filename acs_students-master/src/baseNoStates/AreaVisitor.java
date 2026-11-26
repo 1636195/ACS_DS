@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Interface for the Visitor design pattern applied to the area tree.
  * Each concrete visitor implements a different operation that traverses
  * the tree of partitions and spaces.
@@ -9,7 +9,7 @@ package baseNoStates;
  */
 public interface AreaVisitor<T> {
 
-  /**
+  /*
    * Visits a leaf space.
    *
    * @param space the space to visit
@@ -17,7 +17,7 @@ public interface AreaVisitor<T> {
    */
   T visit(Space space);
 
-  /**
+  /*
    * Visits a composite partition.
    *
    * @param partition the partition to visit

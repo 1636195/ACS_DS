@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Represents a locked door.
  * A locked door cannot be opened. It must first be unlocked before allowing access.
  * This class is a concrete state of the State pattern.

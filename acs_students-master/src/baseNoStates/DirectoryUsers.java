@@ -8,7 +8,7 @@ import java.util.EnumSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+/*
  * Acts as a singleton registry for all registered users.
  * It guarantees a single source of truth for users and their access groups.
  */
@@ -106,7 +106,7 @@ public final class DirectoryUsers {
     users.add(new User("Ana", "11343", admin));
   }
 
-  /**
+  /*
    * Finds a user by their unique credential.
    *
    * @param credential the user credential
@@ -118,7 +118,7 @@ public final class DirectoryUsers {
         return user;
       }
     }
-    logger.warn("User with credential {} not found", credential);
+    logger.warn("User with credential {} not  found", credential);
     return null;
   }
 }

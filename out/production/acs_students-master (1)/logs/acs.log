@@ -1,67 +1,30 @@
-2026-11-22 17:29:39.864 [main] INFO  baseNoStates.WebServer - Server started. Listening for connections on port : 8080 ...
-2026-11-22 23:17:24.583 [main] INFO  baseNoStates.WebServer - Server started. Listening for connections on port : 8080 ...
-2026-11-22 23:19:25.361 [main] INFO  baseNoStates.WebServer - Server started. Listening for connections on port : 8080 ...
-2026-11-22 23:19:38.805 [Thread-1] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
-2026-11-22 23:19:38.806 [Thread-1] WARN  baseNoStates.Door - Request not authorized for door D2
-2026-11-22 23:19:38.806 [Thread-1] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action open on door D2. Reasons: [Unknown user credential]
-2026-11-22 23:19:39.472 [Thread-2] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
-2026-11-22 23:19:39.473 [Thread-2] WARN  baseNoStates.Door - Request not authorized for door D2
-2026-11-22 23:19:39.473 [Thread-2] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action open on door D2. Reasons: [Unknown user credential]
-2026-11-22 23:19:39.640 [Thread-3] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
-2026-11-22 23:19:39.640 [Thread-3] WARN  baseNoStates.Door - Request not authorized for door D2
-2026-11-22 23:19:39.640 [Thread-3] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action open on door D2. Reasons: [Unknown user credential]
-2026-11-22 23:19:41.656 [Thread-4] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
-2026-11-22 23:19:41.657 [Thread-4] WARN  baseNoStates.Door - Request not authorized for door D2
-2026-11-22 23:19:41.657 [Thread-4] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action unlock on door D2. Reasons: [Unknown user credential]
-2026-11-22 23:19:44.879 [Thread-5] WARN  baseNoStates.Door - Request not authorized for door D2
-2026-11-22 23:19:44.879 [Thread-5] WARN  baseNoStates.requests.RequestReader - User 95783 NOT authorized for action unlock on door D2. Reasons: [User not authorized by group rules]
-2026-11-22 23:19:49.591 [Thread-6] WARN  baseNoStates.Door - Request not authorized for door D2
-2026-11-22 23:19:49.592 [Thread-6] WARN  baseNoStates.requests.RequestReader - User 95783 NOT authorized for action lock on door D2. Reasons: [User not authorized by group rules]
-2026-11-22 23:19:53.184 [Thread-7] WARN  baseNoStates.Door - Request not authorized for door D5
-2026-11-22 23:19:53.184 [Thread-7] WARN  baseNoStates.requests.RequestReader - User 95783 NOT authorized for action lock on door D5. Reasons: [User not authorized by group rules]
-2026-11-22 23:19:57.190 [Thread-8] WARN  baseNoStates.Door - Request not authorized for door D5
-2026-11-22 23:19:57.191 [Thread-8] WARN  baseNoStates.requests.RequestReader - User 95783 NOT authorized for action open on door D5. Reasons: [User not authorized by group rules]
-2026-11-22 23:19:58.272 [Thread-9] WARN  baseNoStates.Door - Request not authorized for door D5 
-2026-11-22 23:19:58.273 [Thread-9] WARN  baseNoStates.requests.RequestReader - User 95783 NOT authorized for action open on door D5. Reasons: [User not authorized by group rules]
-2026-11-22 23:19:58.879 [Thread-10] WARN  baseNoStates.Door - Request not authorized for door D5
-2026-11-22 23:19:58.879 [Thread-10] WARN  baseNoStates.requests.RequestReader - User 95783 NOT authorized for action open on door D5. Reasons: [User not authorized by group rules]
-2026-11-22 23:20:04.105 [Thread-11] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action open on door D5
-2026-11-22 23:20:08.998 [Thread-12] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
-2026-11-22 23:20:09.767 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
-2026-11-22 23:20:17.578 [Thread-14] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action close on door D5
-2026-11-22 23:20:19.779 [Thread-15] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
-2026-11-22 23:20:24.144 [Thread-16] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock_shortly on door D4
-2026-11-22 23:20:27.952 [Thread-17] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D4
-2026-11-22 23:20:29.881 [Thread-18] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock_shortly on door D4
-2026-11-22 23:20:31.823 [Thread-20] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action open on door D4
-2026-11-22 23:20:40.144 [Thread-21] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D8
-2026-11-23 20:21:23.556 [main] INFO  baseNoStates.WebServer - Server started. Listening for connections on port : 8080 ...
-2026-11-23 20:21:41.090 [Thread-1] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:21:43.907 [Thread-2] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D2
-2026-11-23 20:21:46.565 [Thread-3] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:21:48.677 [Thread-4] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D1
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D3
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D4
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D6
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D8
-2026-11-23 20:22:01.365 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D7
-2026-11-23 20:22:01.366 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D9
-2026-11-23 20:22:18.941 [Thread-10] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D8
-2026-11-23 20:22:18.941 [Thread-10] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D7
-2026-11-23 20:22:18.941 [Thread-10] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D9
-2026-11-23 20:22:33.844 [Thread-11] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D3
-2026-11-23 20:22:33.844 [Thread-11] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D4
-2026-11-23 20:22:33.844 [Thread-11] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D5
-2026-11-23 20:22:33.844 [Thread-11] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D6
-2026-11-23 20:22:50.109 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock_shortly on door D5
-2026-11-23 20:22:53.801 [Thread-14] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock_shortly on door D2
-2026-11-23 20:22:56.643 [Thread-16] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action open on door D2
-2026-11-23 20:22:59.421 [Thread-17] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:23:00.132 [Thread-18] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:23:00.331 [Thread-19] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:23:00.494 [Thread-20] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
-2026-11-23 20:23:12.316 [Thread-23] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D2
-2026-11-23 20:23:15.149 [Thread-24] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action close on door D2
+2026-11-26 12:40:59.725 [main] INFO  baseNoStates.WebServer - Server started. Listening for connections on port : 8080 ...
+2026-11-26 14:01:12.726 [main] INFO  baseNoStates.WebServer - Server started. Listening for connections on port : 8080 ...
+2026-11-26 14:01:55.120 [Thread-1] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action open on door D1
+2026-11-26 14:02:00.414 [Thread-2] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
+2026-11-26 14:02:06.225 [Thread-3] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock_shortly on door D8
+2026-11-26 14:02:09.210 [Thread-4] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D8
+2026-11-26 14:02:10.989 [Thread-5] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock_shortly on door D8
+2026-11-26 14:02:14.542 [Thread-7] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action open on door D8
+2026-11-26 14:02:21.861 [Thread-8] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
+2026-11-26 14:02:21.861 [Thread-8] WARN  baseNoStates.Door - Request not authorized for door D5
+2026-11-26 14:02:21.861 [Thread-8] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action open on door D5. Reasons: [Unknown user credential]
+2026-11-26 14:02:26.274 [Thread-9] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
+2026-11-26 14:02:26.274 [Thread-9] WARN  baseNoStates.Door - Request not authorized for door D5
+2026-11-26 14:02:26.274 [Thread-9] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action unlock_shortly on door D5. Reasons: [Unknown user credential]
+2026-11-26 14:02:28.700 [Thread-10] WARN  baseNoStates.DirectoryUsers - User with credential 00112 not found
+2026-11-26 14:02:28.700 [Thread-10] WARN  baseNoStates.Door - Request not authorized for door D5
+2026-11-26 14:02:28.700 [Thread-10] WARN  baseNoStates.requests.RequestReader - User 00112 NOT authorized for action unlock on door D5. Reasons: [Unknown user credential]
+2026-11-26 14:02:44.542 [Thread-12] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D3
+2026-11-26 14:02:44.542 [Thread-12] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D4
+2026-11-26 14:02:44.542 [Thread-12] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D5
+2026-11-26 14:02:44.542 [Thread-12] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action unlock on door D6
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D1
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D2
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D3
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D4
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D5
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D6
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D8
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D7
+2026-11-26 14:02:55.139 [Thread-13] INFO  baseNoStates.requests.RequestReader - User 11343 authorized for action lock on door D9

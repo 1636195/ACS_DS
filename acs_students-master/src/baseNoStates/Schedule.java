@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-/**
+/*
  * Defines when a user group is allowed to access the building.
  * A schedule contains a date range, a daily time range and a set of permitted days of the week.
  * User groups use schedules to determine whether a request is authorized at a given date and time.
@@ -42,7 +42,7 @@ public class Schedule {
     this.allowedDays = Collections.unmodifiableSet(EnumSet.copyOf(allowedDays));
   }
 
-  /**
+  /*
    * Checks whether the requested date and time belong to this schedule.
    * Start and end boundaries are inclusive.
    *

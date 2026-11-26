@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Represents a door that has remained open after its temporary unlocking period has expired.
  * Closing a propped door automatically locks it.
  */

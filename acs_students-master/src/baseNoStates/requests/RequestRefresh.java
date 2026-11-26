@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
+/*
  * Represents a request to refresh the state of all doors.
  * This request is used by the simulator to repaint the doors and readers.
  */

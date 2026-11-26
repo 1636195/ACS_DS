@@ -48,7 +48,7 @@ public final class DirectoryDoors {
     allDoors.addAll(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9));
   }
 
-  /**
+  /*
    * Finds a door by its unique identifier.
    *
    * @param id the door identifier
@@ -64,7 +64,7 @@ public final class DirectoryDoors {
     return null; // otherwise we get a Java error
   }
 
-  /**
+  /*
    * Returns all doors in the system.
    * This is needed by RequestRefresh.
    *

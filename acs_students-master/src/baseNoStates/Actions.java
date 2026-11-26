@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Defines the string constants for all actions supported by the access control system.
  * These constants are used to parse requests and to check permissions.
  */

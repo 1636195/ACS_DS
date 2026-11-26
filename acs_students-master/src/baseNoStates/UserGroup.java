@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
+/*
  * Represents a group of users sharing access permissions.
  * Permissions specify which actions can be performed,
  * in which areas and during which schedule.
@@ -35,7 +35,7 @@ public class UserGroup {
     return name;
   }
 
-  /**
+  /*
    * Assigns a schedule to the group.
    *
    * @param schedule the schedule
@@ -44,7 +44,7 @@ public class UserGroup {
     this.schedule = schedule;
   }
 
-  /**
+  /*
    * Grants permission to perform an action.
    *
    * @param action the allowed action
@@ -56,7 +56,7 @@ public class UserGroup {
     allowedActions.add(action);
   }
 
-  /**
+  /*
    * Grants access to a space or partition.
    *
    * @param area the allowed area
@@ -70,7 +70,7 @@ public class UserGroup {
     }
   }
 
-  /**
+  /*
    * Checks if the group has access to an area.
    * Access to a partition includes all its descendant spaces and partitions.
    * It uses the AreaContainsVisitor to perform the check.
@@ -94,7 +94,7 @@ public class UserGroup {
     return false;
   }
 
-  /**
+  /*
    * Checks the four authorization dimensions:
    * who (group), what (action), where (spaces) and when (schedule).
    *

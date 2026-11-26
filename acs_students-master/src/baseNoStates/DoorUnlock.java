@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Represents an unlocked door.
  * An unlocked door can be opened and closed.
  * It can only be locked when physically closed.

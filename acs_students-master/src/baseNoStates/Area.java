@@ -2,7 +2,7 @@ package baseNoStates;
 
 import java.util.List;
 
-/**
+/*
  * Represents an area in the access control system.
  * An area can be an individual space or a partition containing other areas.
  * This class is the common component of the Composite design pattern,
@@ -26,7 +26,7 @@ public abstract class Area {
     return id;
   }
 
-  /**
+  /*
    * Accepts a visitor, which will perform an operation on this area.
    * This is the entry point of the Visitor design pattern.
    *

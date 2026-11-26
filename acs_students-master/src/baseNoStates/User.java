@@ -1,6 +1,6 @@
 package baseNoStates;
 
-/**
+/*
  * Represents a registered user of the access control system.
  * Each user belongs to a group and acquires access permissions through that group,
  * following the RBAC model.
@@ -32,7 +32,7 @@ public class User {
     return group;
   }
 
-  /**
+  /*
    * Allows changing the user's role without deleting or recreating the user.
    *
    * @param group the new user group

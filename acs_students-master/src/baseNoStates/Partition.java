@@ -3,7 +3,7 @@ package baseNoStates;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * Represents a group of spaces and other partitions.
  * Partition is the composite element of the Composite design pattern.
  * It allows areas to be organized hierarchically and operations to be applied
@@ -18,7 +18,7 @@ public class Partition extends Area {
     this.children = new ArrayList<>();
   }
 
-  /**
+  /*
    * Adds a space or another partition.
    * It uses the AreaContainsVisitor to prevent cycles in the hierarchy.
    *
@@ -38,7 +38,7 @@ public class Partition extends Area {
     }
   }
 
-  /**
+  /*
    * Returns the direct children of this partition.
    *
    * @return a list of child areas
