@@ -1,9 +1,7 @@
 package baseNoStates;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Represents a group of spaces and other partitions.
@@ -22,6 +20,7 @@ public class Partition extends Area {
 
   /**
    * Adds a space or another partition.
+   * It uses the AreaContainsVisitor to prevent cycles in the hierarchy.
    *
    * @param area the area to add
    */
@@ -29,8 +28,9 @@ public class Partition extends Area {
     if (area == null) {
       throw new IllegalArgumentException("Area cannot be null");
     }
-    // Prevent cycles in the hierarchy.
-    if (area == this || area.containsArea(this)) {
+    // Prevent cycles by checking if the new area already contains this partition.
+    AreaContainsVisitor containsVisitor = new AreaContainsVisitor(this);
+    if (area.accept(containsVisitor)) {
       throw new IllegalArgumentException("Cyclic area hierarchy is not allowed");
     }
     if (!children.contains(area)) {
@@ -48,26 +48,7 @@ public class Partition extends Area {
   }
 
   @Override
-  public List<Door> getDoorsGivingAccess() {
-    Set<Door> doors = new LinkedHashSet<>();
-    // Recursively collect doors from every child.
-    for (Area child : children) {
-      doors.addAll(child.getDoorsGivingAccess());
-    }
-    return new ArrayList<>(doors);
-  }
-
-  @Override
-  public boolean containsArea(Area area) {
-    if (this == area) {
-      return true;
-    }
-    // Search recursively in all child areas.
-    for (Area child : children) {
-      if (child.containsArea(area)) {
-        return true;
-      }
-    }
-    return false;
+  public <T> T accept(AreaVisitor<T> visitor) {
+    return visitor.visit(this);
   }
 }

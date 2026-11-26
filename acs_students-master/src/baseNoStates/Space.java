@@ -34,13 +34,18 @@ public class Space extends Area {
     }
   }
 
-  @Override
-  public List<Door> getDoorsGivingAccess() {
+  /**
+   * Returns the doors that give direct access to this space.
+   * This method is used by the DoorCollectorVisitor.
+   *
+   * @return a list of access doors
+   */
+  public List<Door> getAccessDoors() {
     return new ArrayList<>(accessDoors);
   }
 
   @Override
-  public boolean containsArea(Area area) {
-    return this == area;
+  public <T> T accept(AreaVisitor<T> visitor) {
+    return visitor.visit(this);
   }
 }

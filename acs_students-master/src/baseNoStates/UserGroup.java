@@ -73,6 +73,7 @@ public class UserGroup {
   /**
    * Checks if the group has access to an area.
    * Access to a partition includes all its descendant spaces and partitions.
+   * It uses the AreaContainsVisitor to perform the check.
    *
    * @param area the area to check
    * @return true if the group can access the area, false otherwise
@@ -84,8 +85,9 @@ public class UserGroup {
     if (administrator) {
       return true;
     }
+    AreaContainsVisitor containsVisitor = new AreaContainsVisitor(area);
     for (Area allowedArea : allowedAreas) {
-      if (allowedArea.containsArea(area)) {
+      if (allowedArea.accept(containsVisitor)) {
         return true;
       }
     }

@@ -7,6 +7,9 @@ import java.util.List;
  * An area can be an individual space or a partition containing other areas.
  * This class is the common component of the Composite design pattern,
  * allowing operations to be performed uniformly on spaces and partitions.
+ *
+ * The Visitor pattern is used to separate the tree structure from the
+ * algorithms that traverse it.
  */
 public abstract class Area {
 
@@ -24,21 +27,14 @@ public abstract class Area {
   }
 
   /**
-   * Returns all doors that give access to this area.
-   * Partitions will collect doors recursively.
+   * Accepts a visitor, which will perform an operation on this area.
+   * This is the entry point of the Visitor design pattern.
    *
-   * @return a list of doors
+   * @param visitor the visitor to accept
+   * @param <T>     the type of result the visitor produces
+   * @return the result of the visitor's operation
    */
-  public abstract List<Door> getDoorsGivingAccess();
-
-  /**
-   * Determines whether this area contains another area, including itself.
-   * Used for access permissions.
-   *
-   * @param area the area to check
-   * @return true if this area contains the given area, false otherwise
-   */
-  public abstract boolean containsArea(Area area);
+  public abstract <T> T accept(AreaVisitor<T> visitor);
 
   @Override
   public String toString() {

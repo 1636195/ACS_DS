@@ -4,8 +4,10 @@ import baseNoStates.Actions;
 import baseNoStates.Area;
 import baseNoStates.DirectoryAreas;
 import baseNoStates.Door;
+import baseNoStates.DoorCollectorVisitor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -89,8 +91,11 @@ public class RequestArea implements Request {
       return;
     }
 
+    // Use the DoorCollectorVisitor to get all doors in the area.
+    List<Door> doors = area.accept(new DoorCollectorVisitor());
+
     // Process one reader request for each access door.
-    for (Door door : area.getDoorsGivingAccess()) {
+    for (Door door : doors) {
       RequestReader requestReader = new RequestReader(
           credential,
           action,
